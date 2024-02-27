@@ -1,16 +1,19 @@
 import express from "express"
 import { deleteGoal, getGoal, getGoals, setGoal, updateGoal } from "../controllerss/goalControllers"
+import protectRoute from "../middleware/AuthMiddleware"
 
 const goalRouter = express.Router()
 
-goalRouter.get('/', getGoals)
-goalRouter.get("/:id", getGoal)
-goalRouter.post('/' , setGoal)
-goalRouter.put("/:id", updateGoal)
-goalRouter.delete("/:id" , deleteGoal)
+
+// All of our goal routes should be protected
+goalRouter.get('/',protectRoute, getGoals)
+goalRouter.get("/:id", protectRoute,  getGoal)
+goalRouter.post('/' , protectRoute, setGoal)
+goalRouter.put("/:id", protectRoute, updateGoal)
+goalRouter.delete("/:id" ,protectRoute, deleteGoal)
 
 // we can also do like this
-// goalRouter.get('/', getGoals).post('/', setGoal)
-// goalRouter.get('/:id', getGoal).put('/;id', updateGoal).delete('/:id', deleteGoal)
+// goalRouter.route('/').get(protectRoute, getGoals).post(protectRoute, setGoal)
+// goalRouter.route('/:id).get(protectRoute, getGoal).put(protectRoute, updateGoal).delete(protectRoute, deleteGoal)
 
 export default goalRouter
