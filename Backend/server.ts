@@ -3,14 +3,17 @@ import dotenv from "dotenv"
 import connectDB from "./config/db"
 import goalRouter from "./Routes/goalRoutes"
 import userRouter from "./Routes/userRoutes"
+import cors from 'cors'
+
 dotenv.config()
 
 connectDB()
 
 
 const app = express()
-const PORT = process.env.PORT || 5000
 
+const PORT = process.env.PORT || 5500
+app.use(cors());
 // body parser middle ware
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))

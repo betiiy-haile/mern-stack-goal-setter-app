@@ -32,6 +32,7 @@ export const registerUser = asyncHandler(async (req: Request, res: Response) => 
         email,
         password: hashedPassword
     })
+    console.log("registered user", user)
 
     if (user) {
         // status 201 means somthing has created
@@ -66,9 +67,8 @@ export const getAllUsers = asyncHandler(async( req: Request, res: Response) => {
 */
 
 export const loginUser = asyncHandler(async ( req: Request, res : Response) => {
-
+    
     const { email, password } = req.body
-
     const errors = validationResult(req)
     if(!errors.isEmpty()){
         res.status(400)
