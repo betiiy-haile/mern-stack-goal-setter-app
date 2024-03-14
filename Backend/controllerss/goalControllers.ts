@@ -41,6 +41,7 @@ export const getGoal = asyncHandler(async (req: CustomRequest, res: Response) =>
     @access - Private
 
 */
+
 export const setGoal = asyncHandler(async (req: CustomRequest, res: Response) => {
     if(!req.body.text){
         // return res.status(400).json({message: "Please include a goal"})
@@ -69,16 +70,15 @@ export const updateGoal = asyncHandler(async (req: CustomRequest, res: Response)
         throw new Error("Goal not found")
     }
 
-    const user = await userModel.findById(req.user?.id)
 
     // check for user
-    if(!user) {
+    if(!req.user) {
         res.status(401)
         throw new Error("User not found")
     }
 
     // make sure the logged in user matches the goal user
-    if(goal.user.toString() !== user.id) {
+    if(goal.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error("User not authorized")
     }
@@ -102,16 +102,14 @@ export const deleteGoal = asyncHandler(async (req: CustomRequest, res: Response)
         throw new Error("Goal not found")
     }
 
-    const user = await userModel.findById(req.user?.id)
-
     // check for user
-    if (!user) {
+    if (!req.user) {
         res.status(401)
         throw new Error("User not found")
     }
 
     // make sure the logged in user matches the goal user
-    if (goal.user.toString() !== user.id) {
+    if (goal.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error("User not authorized")
     }

@@ -22,7 +22,7 @@ userRouter.post('/register', [
     ],
     registerUser)
 
-userRouter.post('/login',[
+userRouter.post('/login',[ 
     body('email').not().isEmpty().withMessage("Email is required"),
     body('email').isEmail().withMessage("Email must be Valid"),
     body('password').not().isEmpty().withMessage("Password is required")

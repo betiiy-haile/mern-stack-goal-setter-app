@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:5500/api/users/'
+const API_URL = 'http://localhost:5000/api/users/'
 
 interface User {
     name: string
@@ -26,7 +26,7 @@ const register = async (userData: User) => {
 
 const login = async (userData: LoginData) => {
     const response = await axios.post(API_URL + 'login', userData)
-    console.log(response.data)
+    console.log("response fron backend" , response.data)
 
     if(response.data) {
         localStorage.setItem('user', JSON.stringify(response.data))

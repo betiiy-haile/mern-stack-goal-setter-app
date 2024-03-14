@@ -44,7 +44,29 @@ export const register = createAsyncThunk('auth/register', async (userData: User,
 export const login = createAsyncThunk('auth/login', async (userData: LoginData, thunkApi) => {
     try {
         const response = await authService.login(userData);
+        {/*
         return response.data; // Assuming the response contains the registered user data
+         the above return doesn't work because if i return response.data the action.payload for the login fullfilled will be  undefined because by default it will try to find the data item from the response object. 
+        so i have to return response instead of response.data  
+    
+        For example, if the API response is as follows:
+        {
+            data: {
+                id: 123,
+                name: "John Doe",
+                email: "john@example.com"
+            }
+        }
+
+        Then, action.payload in the login.fulfilled case will be:
+        {
+            id: 123,
+            name: "John Doe",
+            email: "john@example.com"
+        }
+    
+    */}   
+        return response
     } catch (error: any) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         return thunkApi.rejectWithValue({ message });
@@ -89,6 +111,7 @@ export const authSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.user = action.payload;
+                // console.log("action payload", action.payload)
             })
             .addCase(login.rejected, (state, action) => {
                 state.isError = true;
